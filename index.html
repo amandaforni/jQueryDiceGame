@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <Title>Dice Game</title>
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+    </style>
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <h1>The Dice Game!</h1>
+        <div class="glass">
+            <div class="players" id="players">
+                <h2>Player 1</h2>
+                <br>
+            </div>
+            <div id="content">
+                <img src="img/dice1.png" id="image">
+                <br>
+                <h3>Score:</h3>
+                <h3 id="score"></h3>
+            </div>
+            <div>
+                <button type="button" class="roll">Press enter to roll dice</button>
+            </div>
+            <div class="restart">
+                <button type="button" id="restart">Press Spacebar to restart game</button>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        $(document).ready(function () {
+            let playerScore = 0;
+            let playscore = document.getElementById("score");
+            let img = document.getElementById("image");
+
+            const rollDie = () => {
+                let dice = Math.floor(Math.random() * 6) + 1;
+                img.src = "./img/dice" + dice + ".png";
+                playscore.textContent = dice;
+
+                if (dice !== 1) {
+                    playerScore += dice;
+                    $("#score").html(playerScore);
+                }
+                else {
+                    $(".glass").html("<h3>You rolled one, try again!</h3><br><p>Press Spacebar to restart game.</p>")
+                }
+
+                if (playerScore === 20) {
+                    $(".glass").html("<h3>Your score hit 20, try again!</h3><br><p>Press Spacebar to restart game.</p>")
+                }
+
+                else if (playerScore > 20) {
+                    $(".glass").html("<h3>You win!</h3><br><p>Press Spacebar to restart game.</p>")
+                }
+            }
+            $("body").keydown(function (event){
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if (keycode == `13`){
+                    rollDie();
+                }
+            })
+
+            $("body").keydown(function (event){
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if (keycode == `32`){
+                location.reload();
+                }
+            })
+
+        });
+
+
+
+
+    </script>
+</body>
+
+</html>
